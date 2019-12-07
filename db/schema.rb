@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191207091710) do
+ActiveRecord::Schema.define(version: 20191207095451) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string "title"
+    t.string "color"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_categories_on_user_id"
+  end
 
   create_table "tags", force: :cascade do |t|
     t.string "title"
@@ -38,6 +47,8 @@ ActiveRecord::Schema.define(version: 20191207091710) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "category_id"
+    t.index ["category_id"], name: "index_tasks_on_category_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
