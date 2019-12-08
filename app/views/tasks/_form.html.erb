@@ -1,5 +1,8 @@
 <%= simple_form_for(@task) do |f| %>
   <%= f.input :title %>
   <%= f.input :note %>
+  <%= f.input :is_done, as: :boolean %>
+  <%= f.association :category, collection: @categories, include_blank: "(select if none)", required: false %>
+  <%= f.association :tags, collection: @tags, as: :check_boxes, :label_method => lambda { |tag| "<span style=\"color: #{tag.color}\">#{tag.title}</span>".html_safe } %>
   <%= f.button :submit %>
 <% end %>

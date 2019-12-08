@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.includes([:category, :tags])
   end
 
   def show
@@ -9,10 +9,12 @@ class TasksController < ApplicationController
 
   def new
     @task = current_user.tasks.new
+    load_categories_tags
   end
 
   def edit
     @task = current_user.tasks.find(params[:id])
+    load_categories_tags
   end
 
   def create
@@ -21,6 +23,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to @task
     else
+      load_categories_tags
       render 'new'
     end
   end
@@ -31,6 +34,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task
     else
+      load_categories_tags
       render 'edit'
     end
   end
@@ -44,6 +48,11 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :note)
+    params.require(:task).permit(:title, :note, :is_done, :category_id, tag_ids: [])
+  end
+
+  def load_categories_tags
+    @categories = current_user.categories
+    @tags = current_user.tags
   end
 end

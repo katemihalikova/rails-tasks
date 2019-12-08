@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :tasks
+  get 'settings', to: 'settings#index'
+  scope 'settings' do
+    resources :tags, :categories
+  end
 
   root 'tasks#index'
 end

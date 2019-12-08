@@ -1,0 +1,5 @@
+<%= simple_form_for(@tag) do |f| %>
+  <%= f.input :title %>
+  <%= f.input :color, input_html: { type: "color" } %>
+  <%= f.button :submit %>
+<% end %>

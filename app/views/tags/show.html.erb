@@ -1,0 +1,14 @@
+<h1>Tass#show</h1>
+
+<p>
+  <strong>Title:</strong>
+  <%= @tag.title %>
+</p>
+ 
+<p>
+  <strong>Color:</strong>
+  <span style="color: <%= @tag.color %>"><%= @tag.color %></span>
+</p>
+
+<%= link_to 'Edit', edit_tag_path(@tag) %> |
+<%= link_to 'Back', tags_path %>

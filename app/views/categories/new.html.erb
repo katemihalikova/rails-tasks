@@ -1,0 +1,14 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Domů', root_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Nastavení', settings_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Kategorie', categories_path %></li>
+    <li class="breadcrumb-item active" aria-current="page">Vytvořit kategorii</li>
+  </ol>
+</nav>
+
+<h1>category#new</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', categories_path %>
