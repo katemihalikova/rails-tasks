@@ -1,0 +1,36 @@
+<% if tags.size > 0 %>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Tag</th>
+        <th scope="col">Barva</th>
+        <th scope="col">Úkolů</th>
+        <th scope="col">Datum vytvoření</th>
+        <th scope="col">Datum změny</th>
+        <th scope="col" style="width: 13rem;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tags.each do |tag| %>
+        <tr>
+          <th scope="row"><%= tag.id %></th>
+          <td><%= render partial: 'badge', locals: { tag: tag } %></td>
+          <td><%= tag.color %></td>
+          <td><%= tag.tasks.size %></td>
+          <td><%= format_datetime tag.created_at %></td>
+          <td><%= format_datetime tag.updated_at %></td>
+          <td class="text-right">
+            <%= link_to 'Detail', tag_path(tag) %> |
+            <%= link_to 'Upravit', edit_tag_path(tag) %> |
+            <%= link_to 'Smazat', tag_path(tag), method: :delete, data: { confirm: 'Opravdu smazat?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>
+    Nejsou tu žádné tagy. Přidejte si <%= link_to 'nový tag', new_tag_path %>.
+  </p>
+<% end %>

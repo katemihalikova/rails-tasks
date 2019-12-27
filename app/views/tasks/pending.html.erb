@@ -1,0 +1,15 @@
+<h1 class="my-3">Nehotové úkoly</h1>
+
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    'Nehotové úkoly' => nil,
+  }
+} %>
+
+<p>
+  <%= link_to 'Přidat nový úkol', new_task_path %> |
+  Zobrazit <%= link_to 'všechny', root_path %> nebo <%= link_to 'jen hotové', tasks_completed_path %> úkoly
+</p>
+
+<%= render partial: 'list', locals: { tasks: @tasks } %>

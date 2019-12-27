@@ -1,8 +1,9 @@
 <%= simple_form_for(@task) do |f| %>
-  <%= f.input :title %>
-  <%= f.input :note %>
-  <%= f.input :is_done, as: :boolean %>
-  <%= f.association :category, collection: @categories, include_blank: "(select if none)", required: false %>
-  <%= f.association :tags, collection: @tags, as: :check_boxes, :label_method => lambda { |tag| "<span style=\"color: #{tag.color}\">#{tag.title}</span>".html_safe } %>
-  <%= f.button :submit %>
+  <%= f.input :title, label: 'Název' %>
+  <%= f.input :note, label: 'Poznámka' %>
+  <%= f.input :deadline_at, as: :datetime, html5: true, label: 'Deadline' %>
+  <%= f.input :is_done, as: :boolean, label: 'Označit jako hotovo' %>
+  <%= f.association :category, label: 'Kategorie', collection: @categories, include_blank: "(žádná kategorie)", required: false %>
+  <%= f.association :tags, label: 'Tagy', collection: @tags, as: :check_boxes, label_method: lambda { |tag| render(partial: 'tags/badge', locals: { tag: tag }).html_safe } %>
+  <%= f.button :submit, 'Uložit úkol', class: 'btn-primary' %>
 <% end %>

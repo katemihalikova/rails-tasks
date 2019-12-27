@@ -1,15 +1,47 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<h1 class="my-3">
+  Úkol:
+  <% if @task.is_done %>✔️<% end %> <%= @task.title %>
+</h1>
 
-<p>
-  <strong>Title:</strong>
-  <%= @task.title %>
-</p>
- 
-<p>
-  <strong>Note:</strong>
-  <%= @task.note %>
-</p>
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    @task.title => nil,
+  }
+} %>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<div class="card">
+  <div class="card-body pb-0">
+    <div class="card-title h3"><%= @task.title %></div>
+    <h6 class="card-subtitle mb-2">
+      <% if @task.is_done %>✔️ Hotový<% else %>❌ Nehotový<% end %> úkol
+    </h6>
+    <% if @task.note %>
+      <p class="card-text"><%= @task.note %></p>
+    <% end %>
+  </div>
+  <ul class="list-group list-group-flush pl-sm-5">
+    <li class="list-group-item py-2"><em>ID:</em> <%= @task.id %></li>
+    <li class="list-group-item py-2"><em>Kategorie:</em> <%= if @task.category then render partial: 'categories/badge', locals: { category: @task.category } else "(žádná)" end %></li>
+    <li class="list-group-item py-2"><em>Tagy:</em>
+      <% if @task.tags.size > 0 %>
+        <%@task.tags.each do |tag| %>
+          <%= render partial: 'tags/badge', locals: { tag: tag } %>
+        <% end %>
+      <% else %>
+        (žádné)
+      <% end %>
+    </li>
+    <li class="list-group-item py-2"><em>Deadline:</em> <%= if @task.deadline_at then format_local_datetime @task.deadline_at else "(žádný)" end %></li>
+    <li class="list-group-item py-2"><em>Datum vytvoření:</em> <%= format_datetime @task.created_at %></li>
+    <li class="list-group-item py-2"><em>Datum změny:</em> <%= format_datetime @task.updated_at %></li>
+  </ul>
+  <div class="card-body">
+    <%= link_to 'Upravit', edit_task_path(@task), class: 'card-link' %>
+    <%= link_to 'Smazat', task_path(@task), method: :delete, data: { confirm: 'Opravdu smazat?' }, class: 'card-link' %>
+  </div>
+</div>
+
+<p class="mt-1">
+  <%= link_to 'Jít na seznam úkolů', root_path %>
+</p>

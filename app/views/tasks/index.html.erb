@@ -1,35 +1,17 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
+<h1 class="my-3">Úkoly</h1>
 
-<h1>Listing tasks</h1>
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => nil,
+  }
+} %>
 
-<%= link_to 'New task', new_task_path %>
-<%= link_to 'Settings', settings_path %>
+<p>
+  <%= link_to 'Přidat nový úkol', new_task_path %> |
+  Zobrazit <%= link_to 'jen hotové', tasks_completed_path %> nebo <%= link_to 'jen nehotové', tasks_pending_path %> úkoly
+</p>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Category</th>
-    <th>Tags</th>
-    <th></th>
-  </tr>
+<%= render partial: 'list', locals: { tasks: @tasks } %>
 
-  <% @tasks.each do |task| %>
-    <tr>
-      <td><%= task.title %></td>
-      <td>
-        <% if task.category then %>
-          <span style="color: <%= task.category.color %>; background-color: <%= task.category.color.paint.light? ? "black" : "white" %>;"><%= task.category.title %></span>
-        <% end %>
-      </td>
-      <td>
-        <% task.tags.each do |tag| %>
-          <span class="badge" style="background-color: <%= tag.color %>; color: <%= tag.color.paint.light? ? "black" : "white" %>;"><%= tag.title %></span>
-        <% end %>
-      </td>
-      <td><%= link_to 'Show', task_path(task) %></td>
-      <td><%= link_to 'Edit', edit_task_path(task) %></td>
-      <td><%= link_to 'Destroy', task_path(task), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-</table>
+
+<%#= link_to 'Nastavení', settings_path %>

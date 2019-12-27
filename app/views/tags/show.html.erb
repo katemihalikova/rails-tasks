@@ -1,14 +1,38 @@
-<h1>Tass#show</h1>
+<h1 class="my-3">
+  Tag
+  <%= render partial: 'badge', locals: { tag: @tag } %>
+</h1>
 
-<p>
-  <strong>Title:</strong>
-  <%= @tag.title %>
-</p>
- 
-<p>
-  <strong>Color:</strong>
-  <span style="color: <%= @tag.color %>"><%= @tag.color %></span>
-</p>
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    'Nastavení' => settings_path,
+    'Tagy' => tags_path,
+    @tag.title => nil,
+  }
+} %>
 
-<%= link_to 'Edit', edit_tag_path(@tag) %> |
-<%= link_to 'Back', tags_path %>
+<div class="card">
+  <div class="card-body pb-0">
+    <div class="card-title h3"><%= render partial: 'badge', locals: { tag: @tag } %></div>
+  </div>
+  <ul class="list-group list-group-flush pl-sm-5">
+    <li class="list-group-item py-2"><em>ID:</em> <%= @tag.id %></li>
+    <li class="list-group-item py-2"><em>Barva:</em> <%= @tag.color %></li>
+    <li class="list-group-item py-2"><em>Počet úkolů:</em> <%= @tag.tasks.size %></li>
+    <li class="list-group-item py-2"><em>Datum vytvoření:</em> <%= format_datetime @tag.created_at %></li>
+    <li class="list-group-item py-2"><em>Datum změny:</em> <%= format_datetime @tag.updated_at %></li>
+  </ul>
+  <div class="card-body">
+    <%= link_to 'Upravit', edit_tag_path(@tag), class: 'card-link' %>
+    <%= link_to 'Smazat', tag_path(@tag), method: :delete, data: { confirm: 'Opravdu smazat?' }, class: 'card-link' %>
+  </div>
+</div>
+
+<h2 class="mt-4 h4">Úkoly s tímto tagem</h2>
+
+<%= render partial: 'tasks/list', locals: { tasks: @tag.tasks } %>
+
+<p class="mt-1">
+  <%= link_to 'Jít na seznam tagů', tags_path %>
+</p>

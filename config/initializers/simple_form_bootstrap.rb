@@ -160,13 +160,10 @@ SimpleForm.setup do |config|
   config.wrappers :horizontal_boolean, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.wrapper tag: 'label', class: 'col-sm-3' do |ba|
-      ba.use :label_text
-    end
-    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |wr|
+    b.use :label, class: 'col-sm-3 col-form-label'
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9 pt-2' do |wr|
       wr.wrapper :form_check_wrapper, tag: 'div', class: 'form-check' do |bb|
         bb.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
-        bb.use :label, class: 'form-check-label'
         bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
         bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
       end
@@ -411,19 +408,19 @@ SimpleForm.setup do |config|
 
 
   # The default wrapper to be used by the FormBuilder.
-  config.default_wrapper = :vertical_form
+  config.default_wrapper = :horizontal_form
 
   # Custom wrappers for input types. This should be a hash containing an input
   # type as key and the wrapper that will be used for all inputs with specified type.
   config.wrapper_mappings = {
-    boolean:       :vertical_boolean,
-    check_boxes:   :vertical_collection,
-    date:          :vertical_multi_select,
-    datetime:      :vertical_multi_select,
-    file:          :vertical_file,
-    radio_buttons: :vertical_collection,
-    range:         :vertical_range,
-    time:          :vertical_multi_select
+    boolean:       :horizontal_boolean,
+    check_boxes:   :horizontal_collection,
+    date:          :horizontal_multi_select,
+    datetime:      :horizontal_multi_select,
+    file:          :horizontal_file,
+    radio_buttons: :horizontal_collection,
+    range:         :horizontal_range,
+    time:          :horizontal_multi_select
   }
 
   # enable custom form wrappers

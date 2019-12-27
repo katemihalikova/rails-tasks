@@ -1,0 +1,36 @@
+<% if categories.size > 0 %>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Kategorie</th>
+        <th scope="col">Barva</th>
+        <th scope="col">Úkolů</th>
+        <th scope="col">Datum vytvoření</th>
+        <th scope="col">Datum změny</th>
+        <th scope="col" style="width: 13rem;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% categories.each do |category| %>
+        <tr>
+          <th scope="row"><%= category.id %></th>
+          <td class="pl-4" style="background: linear-gradient(to right, <%= category.color %> 1rem, transparent 1rem);"><%= category.title %></td>
+          <td><%= category.color %></td>
+          <td><%= category.tasks.size %></td>
+          <td><%= format_datetime category.created_at %></td>
+          <td><%= format_datetime category.updated_at %></td>
+          <td class="text-right">
+            <%= link_to 'Detail', category_path(category) %> |
+            <%= link_to 'Upravit', edit_category_path(category) %> |
+            <%= link_to 'Smazat', category_path(category), method: :delete, data: { confirm: 'Opravdu smazat?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>
+    Nejsou tu žádné kategorie. Přidejte si <%= link_to 'novou kategorii', new_category_path %>.
+  </p>
+<% end %>

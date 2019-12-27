@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
   <head>
     <title>RailsTest</title>
     <%= csrf_meta_tags %>
@@ -9,24 +9,47 @@
   </head>
 
   <body>
-    <p class="navbar-text float-right">
-      <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.
-        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-      <% else %>
-        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-      <% end %>
-    </p>
+    <header class="navbar navbar-expand-md navbar-dark bg-primary">
+      <div class="container">
+        <%= link_to 'Správa úkolů', root_path, class: 'navbar-brand' %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <nav class="collapse navbar-collapse ml-3 flex-grow-1" id="navbarNav">
+          <ul class="navbar-nav flex-grow-1 align-items-md-center">
+            <% if user_signed_in? %>
+              <li class="nav-item flex-shrink-0 active"><!-- @TODO active -->
+                <%= link_to 'Úkoly', root_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item flex-shrink-0">
+                <%= link_to 'Nastavení', settings_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item flex-shrink-0 mr-auto">
+                <a class="nav-link" href="#">Můj účet @TODO</a>
+              </li>
+              <li class="nav-item">
+                <div class="py-2 px-md-2 text-light text-md-right font-italic">
+                  <%= current_user.username %>
+                </div>
+              </li>
+              <li class="nav-item flex-shrink-0">
+                <%= link_to 'Odhlásit se', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+              </li>
+            <% else %>
+              <li class="nav-item <%= "active" if controller_name == 'sessions' %>">
+                <%= link_to 'Přihlásit se', new_user_session_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item <%= "active" if controller_name == 'registrations' %>">
+                <%= link_to 'Zaregistrovat se', new_user_registration_path, class: 'nav-link' %>
+              </li>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
-
-    <%= yield %>
+    <main class="container">
+      <%= yield %>
+    </main>
   </body>
 </html>

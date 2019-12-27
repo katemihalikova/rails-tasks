@@ -1,0 +1,51 @@
+<% if tasks.size > 0 %>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Úkol</th>
+        <th scope="col">Kategorie</th>
+        <th scope="col">Tagy</th>
+        <th scope="col">Deadline</th>
+        <th scope="col">Datum vytvoření</th>
+        <th scope="col">Datum změny</th>
+        <th scope="col" style="width: 13rem;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tasks.each do |task| %>
+        <tr>
+          <th scope="row"><%= task.id %></th>
+          <td>
+            <% if task.is_done %>✔️<% end %>
+            <%= task.title %>
+          </td>
+          <% if task.category %>
+            <td class="pl-4" style="background: linear-gradient(to right, <%= task.category.color %> 1rem, transparent 1rem);">
+              <%= task.category.title %>
+            </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td>
+            <% task.tags.each do |tag| %>
+              <%= render partial: 'tags/badge', locals: { tag: tag } %>
+            <% end %>
+          </td>
+          <td><%= if task.deadline_at then format_local_datetime task.deadline_at end %></td>
+          <td><%= format_datetime task.created_at %></td>
+          <td><%= format_datetime task.updated_at %></td>
+          <td class="text-right">
+            <%= link_to 'Detail', task_path(task) %> |
+            <%= link_to 'Upravit', edit_task_path(task) %> |
+            <%= link_to 'Smazat', task_path(task), method: :delete, data: { confirm: 'Opravdu smazat?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>
+    Nejsou tu žádné úkoly. Přidejte si <%= link_to 'nový úkol', new_task_path %>.
+  </p>
+<% end %>

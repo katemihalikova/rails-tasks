@@ -1,6 +1,18 @@
-<h1>Tasks#new</h1>
-<p>Find me in app/views/tasks/new.html.erb</p>
+<h1 class="my-3">
+  Upravit úkol:
+  <% if @task.is_done %>✔️<% end %> <%= @task.title %>
+</h1>
+
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    @original_task.title => task_path(@task),
+    'Upravit úkol' => nil,
+  }
+} %>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', task_path %>
+<p class="mt-1">
+  <%= link_to 'Zrušit', task_path(@task) %>
+</p>

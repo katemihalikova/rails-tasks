@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = current_user.categories
+    @categories = current_user.categories.order(:title)
   end
 
   def show
@@ -8,11 +8,12 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category = current_user.categories.new
+    @category = current_user.categories.new(color: helpers.random_color)
   end
 
   def edit
     @category = current_user.categories.find(params[:id])
+    @original_category = @category.dup
   end
 
   def create
@@ -27,6 +28,7 @@ class CategoriesController < ApplicationController
 
   def update
     @category = current_user.categories.find(params[:id])
+    @original_category = @category.dup
    
     if @category.update(category_params)
       redirect_to @category

@@ -1,0 +1,42 @@
+V našem příkladu s entitami Article a Tag by to v případě použití has_many_through, tedy asociačního modelu (což je doporučený způsob) vypadalo tak, že by přibyl model TagAssignment, který by v sobě měl pouze své id a dva cizí klíče - article_id a tag_id. Příklad s has_and_belongs_to_many by vypadal podobně s tím rozdílem, že by se jednalo o asociační tabulku a ne model. Což nedoporučujeme neboť nad asociační tabulkou se velmi složitě dělají validace a další. V reálném projektu pak s velkou pravděpodností přijde dříve či později situace, kdy je nutné asociační tabulku předělat na asociační model. Tak proč to tak neudělat rovnou. Rozdíl ve výkonu výsledné aplikace je minimální.
+
+
+
+
+Do akcí tříd řízení se nikdy nesmí vkládat aplikační logika! Ta musí být vždy součástí modelu - tedy entitních tříd a služeb!
+
+
+
+
+
+Pohled v Rails je kromě šablonovacího systému a šablon tvořen ještě tzv. helpery. Helpery se nacházejí ve složce /app/helpers a jsou přidruženy vždy ke konkrétní třídě řízení - v jejích šablonách akcí jsou pak dostupné. Helpery slouží k definici případné programátorské části prezentační logiky. Díky helperům mohou být šablony jasné a čitelné.
+
+Jakýkoli kód prezentační logiky, který je složitější než jednoduchá (!) podmínka, či proitetování by se neměl nacházet v šablonách, ale v helperu. Helper by se následně měl ze šablony volat.
+
+Rails jsou již v základu vybaveny řadou velmi užitečných helperů, zejména pro tvorbu formulářů. Všechny jsou přehledně popsány v dokumentaci.
+
+https://guides.rubyonrails.org/form_helpers.html
+
+Do helperů ani do šablony se nikdy nesmí vkládat aplikační logika! Ta musí být vždy součástí modelu - tedy entitních tříd a služeb!
+
+
+
+
+
+V routách v Rails je možné používat jmenné prostory (namespaces) a scopes. Obojí slouží jako jmenný prostor na úrovni path části URL adresy. Rozdíl mezi nimi spočívá v tom, že zatímco scope nemá další dopady na vyhledávání tříd řízení, jejíchž akcí se příslušné routy týkají, použití namespace vynucuje přesunutí tříd řízení rovněž do příslušného namespace.
+
+Pro přesunutí třídy řízení do namespace je třeba provést následující:
+
+soubor třídy řízení přesunout do podadresáře pojmenovaného stejně jako namespace
+
+kód třídy řízení je třeba přesunout do modulu pojmenovaného stejně jako namespace
+
+adresář se šablonami třídy řízení je třeba přesunout do podadresáře pojmenovaného stejně jako namespace
+
+všechny route (_path a _url) helpery je potřeba upravit tak, aby reflektovaly nový namespace
+
+všechny odkazy na instance modelů ve formulářích je třeba upravit, pokud jsou použity k načtení URL adresy pro action příslušného adresáře. A to způsobem, že pokud je instance uložena např. v proměnné @item a nově vytvořený namespace je admin, pak je třeba výskyty @item v šablonách upravit na [:admin, @item].
+
+
+
+

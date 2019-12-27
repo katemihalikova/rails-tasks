@@ -1,5 +1,16 @@
-<h1>Tags#new</h1>
+<h1 class="my-3">Přidat tag</h1>
+
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    'Nastavení' => settings_path,
+    'Tagy' => tags_path,
+    'Přidat tag' => nil,
+  }
+} %>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', tags_path %>
+<p class="mt-1">
+  <%= link_to 'Zrušit', tags_path %>
+</p>

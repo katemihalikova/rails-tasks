@@ -1,23 +1,38 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to 'Domů', root_path %></li>
-    <li class="breadcrumb-item"><%= link_to 'Nastavení', settings_path %></li>
-    <li class="breadcrumb-item"><%= link_to 'Kategorie', categories_path %></li>
-    <li class="breadcrumb-item active" aria-current="page"><%= @category.title %></li>
-  </ol>
-</nav>
+<h1 class="my-3">
+  Kategorie
+  <%= render partial: 'badge', locals: { category: @category } %>
+</h1>
 
-<h1>category#show</h1>
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    'Nastavení' => settings_path,
+    'Kategorie' => categories_path,
+    @category.title => nil,
+  }
+} %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @category.title %>
+<div class="card">
+  <div class="card-body pb-0">
+    <div class="card-title h3"><%= render partial: 'badge', locals: { category: @category } %></div>
+  </div>
+  <ul class="list-group list-group-flush pl-sm-5">
+    <li class="list-group-item py-2"><em>ID:</em> <%= @category.id %></li>
+    <li class="list-group-item py-2"><em>Barva:</em> <%= @category.color %></li>
+    <li class="list-group-item py-2"><em>Počet úkolů:</em> <%= @category.tasks.size %></li>
+    <li class="list-group-item py-2"><em>Datum vytvoření:</em> <%= format_datetime @category.created_at %></li>
+    <li class="list-group-item py-2"><em>Datum změny:</em> <%= format_datetime @category.updated_at %></li>
+  </ul>
+  <div class="card-body">
+    <%= link_to 'Upravit', edit_category_path(@category), class: 'card-link' %>
+    <%= link_to 'Smazat', category_path(@category), method: :delete, data: { confirm: 'Opravdu smazat?' }, class: 'card-link' %>
+  </div>
+</div>
+
+<h2 class="mt-4 h4">Úkoly v této kategorii</h2>
+
+<%= render partial: 'tasks/list', locals: { tasks: @category.tasks } %>
+
+<p class="mt-1">
+  <%= link_to 'Jít na seznam kategorií', categories_path %>
 </p>
- 
-<p>
-  <strong>Color:</strong>
-  <span style="color: <%= @category.color %>"><%= @category.color %></span>
-</p>
-
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>

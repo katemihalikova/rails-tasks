@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
   def index
-    @tags = current_user.tags
+    @tags = current_user.tags.order(:title)
   end
 
   def show
@@ -8,11 +8,12 @@ class TagsController < ApplicationController
   end
 
   def new
-    @tag = current_user.tags.new
+    @tag = current_user.tags.new(color: helpers.random_color)
   end
 
   def edit
     @tag = current_user.tags.find(params[:id])
+    @original_tag = @tag.dup
   end
 
   def create
@@ -27,7 +28,8 @@ class TagsController < ApplicationController
 
   def update
     @tag = current_user.tags.find(params[:id])
-   
+    @original_tag = @tag.dup
+
     if @tag.update(tag_params)
       redirect_to @tag
     else

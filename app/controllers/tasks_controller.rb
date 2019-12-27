@@ -3,6 +3,14 @@ class TasksController < ApplicationController
     @tasks = current_user.tasks.includes([:category, :tags])
   end
 
+  def completed
+    @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: true)
+  end
+
+  def pending
+    @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: false)
+  end
+
   def show
     @task = current_user.tasks.find(params[:id])
   end
@@ -14,6 +22,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = current_user.tasks.find(params[:id])
+    @original_task = @task.dup
     load_categories_tags
   end
 
@@ -30,7 +39,8 @@ class TasksController < ApplicationController
 
   def update
     @task = current_user.tasks.find(params[:id])
-   
+    @original_task = @task.dup
+
     if @task.update(task_params)
       redirect_to @task
     else
@@ -48,7 +58,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :note, :is_done, :category_id, tag_ids: [])
+    params.require(:task).permit(:title, :note, :deadline_at, :is_done, :category_id, tag_ids: [])
   end
 
   def load_categories_tags

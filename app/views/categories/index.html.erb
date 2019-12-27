@@ -1,33 +1,13 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to 'Domů', root_path %></li>
-    <li class="breadcrumb-item"><%= link_to 'Nastavení', settings_path %></li>
-    <li class="breadcrumb-item active" aria-current="page">Kategorie</li>
-  </ol>
-</nav>
+<h1 class="my-3">Kategorie</h1>
 
-<h1>category#index</h1>
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    'Nastavení' => settings_path,
+    'Kategorie' => nil,
+  }
+} %>
 
-<h1>Listing categories</h1>
+<p><%= link_to 'Přidat novou kategorii', new_category_path %></p>
 
-<%= link_to 'New category', new_category_path %>
- 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Color</th>
-    <th>Task count</th>
-    <th></th>
-  </tr>
- 
-  <% @categories.each do |category| %>
-    <tr>
-      <td><%= category.title %></td>
-      <td style="color: <%= category.color %>"><%= category.color %></td>
-      <td><%= category.tasks.size %></td>
-      <td><%= link_to 'Show', category %></td>
-      <td><%= link_to 'Edit', edit_category_path(category) %></td>
-      <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-</table>
+<%= render partial: 'list', locals: { categories: @categories } %>

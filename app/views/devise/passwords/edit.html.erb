@@ -1,4 +1,4 @@
-<h2>Change your password</h2>
+<h1 class="my-3">Změnit heslo</h1>
 
 <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= f.error_notification %>
@@ -8,19 +8,19 @@
 
   <div class="form-inputs">
     <%= f.input :password,
-                label: "New password",
+                label: "Nové heslo",
                 required: true,
                 autofocus: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                hint: ("Minimální délka hesla je #{@minimum_password_length} znaků" if @minimum_password_length),
                 input_html: { autocomplete: "new-password" } %>
     <%= f.input :password_confirmation,
-                label: "Confirm your new password",
+                label: "Kontrola nového hesla",
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Change my password" %>
+    <%= f.button :submit, "Změnit heslo", class: 'btn-primary' %>
   </div>
 <% end %>
 
