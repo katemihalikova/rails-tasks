@@ -57,6 +57,7 @@ group :development do
 
   gem 'bullet'
   gem 'letter_opener'
+  gem 'faker', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
