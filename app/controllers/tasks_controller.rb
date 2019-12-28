@@ -29,7 +29,7 @@ class TasksController < ApplicationController
     elsif category
       redirect_to tasks_by_category_path(category)
     else
-      redirect_to tasks_path
+      redirect_to tasks_path, notice: "Nebyla vybrána žádná kategorie ani tagy."
     end
   end
 
@@ -61,7 +61,11 @@ class TasksController < ApplicationController
 
   def search
     if params[:search]
-      redirect_to tasks_search_path(params[:search][:keyword])
+      if params[:search][:keyword] != ""
+        redirect_to tasks_search_path(params[:search][:keyword])
+      else
+        redirect_to :tasks, notice: "Nebyl vyhledán žádný text."
+      end
     else
       @keyword = params[:keyword]
       @tasks = current_user.tasks.includes([:category, :tags]).where("title LIKE ? OR note LIKE ?", "%#{@keyword}%", "%#{@keyword}%").page(params[:page])
