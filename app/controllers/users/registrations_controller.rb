@@ -17,10 +17,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
         [title, tag]
       end.to_h
 
-      resource.tasks.new(title: 'Toto je jednoduchý úkol', note: '', is_done: false).save
-      resource.tasks.new(title: 'Toto je už dokončený úkol', note: '', is_done: true).save
-      resource.tasks.new(title: 'Nakoupit na večeři', note: '', is_done: false, category: categories['Osobní'], tags: [tags['Nákupy']]).save
-      resource.tasks.new(title: 'Udělat semestrální práci z předmětu WEB', note: '', is_done: false, category: categories['Škola'], tags: [tags['UCL'], tags['WEB']]).save
+      resource.tasks.new(title: 'Toto je jednoduchý úkol', is_done: false).save
+      resource.tasks.new(title: 'Toto je už dokončený úkol', is_done: true).save
+      resource.tasks.new(title: 'Nakoupit na večeři', is_done: false, category: categories['Osobní'], tags: [tags['Nákupy']]).save
+      resource.tasks.new(title: 'Udělat semestrální práci z předmětu WEB', is_done: false, category: categories['Škola'], tags: [tags['UCL'], tags['WEB']]).save
     end
   end
 end
