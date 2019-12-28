@@ -1,0 +1,7 @@
+cs:
+  simple_form:
+    required:
+      text: 'vyžadováno'
+      mark: '*'
+    error_notification:
+      default_message: "Ve formuláři níže se vyskytly problémy."
