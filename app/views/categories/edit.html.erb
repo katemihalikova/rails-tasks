@@ -3,6 +3,7 @@
   <%= render partial: 'badge', locals: { category: @original_category } %>
 </h1>
 
+<%= render 'flash_messages' %>
 <%= render partial: 'breadcrumb', locals: {
   breadcrumb: {
     'Nastavení' => settings_path,

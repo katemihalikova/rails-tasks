@@ -1,5 +1,7 @@
 <h1 class="my-3">Přihlásit se</h1>
 
+<%= render 'flash_messages' %>
+
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-inputs">
     <%= f.input :email,

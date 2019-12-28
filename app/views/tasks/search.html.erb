@@ -2,6 +2,7 @@
   Úkoly obsahující <%= @keyword %>
 </h1>
 
+<%= render 'flash_messages' %>
 <%= render partial: 'breadcrumb', locals: {
   breadcrumb: {
     'Úkoly' => root_path,
