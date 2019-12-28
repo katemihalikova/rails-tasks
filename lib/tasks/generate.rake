@@ -34,7 +34,7 @@ namespace :generate do
     ).each do |has_category, number_of_tags|
       task = user.tasks.new(
         title: Faker::Lorem.words(number: rand(1..3)).join(' '),
-        note: Faker::Boolean.boolean(true_ratio: 0.7) ? Faker::Lorem.sentence : '',
+        note: Faker::Boolean.boolean(true_ratio: 0.7) ? Faker::Lorem.sentence : nil,
         is_done: Faker::Boolean.boolean,
         deadline_at: Faker::Boolean.boolean ? Faker::Time.forward : nil,
       )
