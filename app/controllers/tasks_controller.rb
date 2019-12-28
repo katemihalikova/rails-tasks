@@ -81,6 +81,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.new
     load_categories
     load_tags
+    save_previous_page
   end
 
   def edit
@@ -88,13 +89,14 @@ class TasksController < ApplicationController
     @original_task = @task.dup
     load_categories
     load_tags
+    save_previous_page
   end
 
   def create
     @task = current_user.tasks.new(task_params)
 
     if @task.save
-      redirect_to @task, flash: {success: "Úkol byl úspěšně přidán."}
+      redirect_before_form fallback_location: @task, flash: {success: "Úkol byl úspěšně přidán."}
     else
       load_categories
       load_tags
@@ -107,7 +109,7 @@ class TasksController < ApplicationController
     @original_task = @task.dup
 
     if @task.update(task_params)
-      redirect_to @task, flash: {success: "Úkol byl úspěšně upraven."}
+      redirect_before_form fallback_location: @task, flash: {success: "Úkol byl úspěšně upraven."}
     else
       load_categories
       load_tags
@@ -118,8 +120,13 @@ class TasksController < ApplicationController
   def destroy
     @task = current_user.tasks.find(params[:id])
     @task.destroy
-   
-    redirect_to tasks_path, flash: {success: "Úkol byl úspěšně smazán."}
+
+    referer = begin URI(request.referer).path rescue nil end
+    if (referer == task_path(@task))
+      redirect_to tasks_path, flash: {success: "Úkol byl úspěšně smazán."}
+    else
+      redirect_back fallback_location: tasks_path, flash: {success: "Úkol byl úspěšně smazán."}
+    end
   end
 
   private

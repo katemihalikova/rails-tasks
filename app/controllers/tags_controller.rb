@@ -10,18 +10,20 @@ class TagsController < ApplicationController
 
   def new
     @tag = current_user.tags.new(color: helpers.random_color)
+    save_previous_page
   end
 
   def edit
     @tag = current_user.tags.find(params[:id])
     @original_tag = @tag.dup
+    save_previous_page
   end
 
   def create
     @tag = current_user.tags.new(tag_params)
 
     if @tag.save
-      redirect_to @tag, flash: {success: "Tag byl úspěšně přidán."}
+      redirect_before_form fallback_location: @tag, flash: {success: "Tag byl úspěšně přidán."}
     else
       render 'new'
     end
@@ -32,7 +34,7 @@ class TagsController < ApplicationController
     @original_tag = @tag.dup
 
     if @tag.update(tag_params)
-      redirect_to @tag, flash: {success: "Tag byl úspěšně upraven."}
+      redirect_before_form fallback_location: @tag, flash: {success: "Tag byl úspěšně upraven."}
     else
       render 'edit'
     end
@@ -41,7 +43,7 @@ class TagsController < ApplicationController
   def destroy
     @tag = current_user.tags.find(params[:id])
     @tag.destroy
-   
+
     redirect_to tags_path, flash: {success: "Tag byl úspěšně smazán."}
   end
 
