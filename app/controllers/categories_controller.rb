@@ -21,7 +21,7 @@ class CategoriesController < ApplicationController
     @category = current_user.categories.new(category_params)
 
     if @category.save
-      redirect_to @category
+      redirect_to @category, flash: {success: "Kategorie byla úspěšně přidána."}
     else
       render 'new'
     end
@@ -32,7 +32,7 @@ class CategoriesController < ApplicationController
     @original_category = @category.dup
    
     if @category.update(category_params)
-      redirect_to @category
+      redirect_to @category, flash: {success: "Kategorie byla úspěšně upravena."}
     else
       render 'edit'
     end
@@ -42,7 +42,7 @@ class CategoriesController < ApplicationController
     @category = current_user.categories.find(params[:id])
     @category.destroy
    
-    redirect_to categories_path
+    redirect_to categories_path, flash: {success: "Kategorie byla úspěšně smazána."}
   end
 
   private

@@ -21,7 +21,7 @@ class TagsController < ApplicationController
     @tag = current_user.tags.new(tag_params)
 
     if @tag.save
-      redirect_to @tag
+      redirect_to @tag, flash: {success: "Tag byl úspěšně přidán."}
     else
       render 'new'
     end
@@ -32,7 +32,7 @@ class TagsController < ApplicationController
     @original_tag = @tag.dup
 
     if @tag.update(tag_params)
-      redirect_to @tag
+      redirect_to @tag, flash: {success: "Tag byl úspěšně upraven."}
     else
       render 'edit'
     end
@@ -42,7 +42,7 @@ class TagsController < ApplicationController
     @tag = current_user.tags.find(params[:id])
     @tag.destroy
    
-    redirect_to tags_path
+    redirect_to tags_path, flash: {success: "Tag byl úspěšně smazán."}
   end
 
   private

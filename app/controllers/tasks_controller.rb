@@ -94,7 +94,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.new(task_params)
 
     if @task.save
-      redirect_to @task
+      redirect_to @task, flash: {success: "Úkol byl úspěšně přidán."}
     else
       load_categories
       load_tags
@@ -107,7 +107,7 @@ class TasksController < ApplicationController
     @original_task = @task.dup
 
     if @task.update(task_params)
-      redirect_to @task
+      redirect_to @task, flash: {success: "Úkol byl úspěšně upraven."}
     else
       load_categories
       load_tags
@@ -119,7 +119,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(params[:id])
     @task.destroy
    
-    redirect_to tasks_path
+    redirect_to tasks_path, flash: {success: "Úkol byl úspěšně smazán."}
   end
 
   private
