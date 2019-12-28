@@ -1,0 +1,19 @@
+<h1 class="my-3">Můj účet</h1>
+
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Můj účet' => nil,
+  }
+} %>
+
+<div class="card">
+  <ul class="list-group list-group-flush pl-sm-5">
+    <li class="list-group-item py-2"><em>Email:</em> <%= @user.email %></li>
+    <li class="list-group-item py-2"><em>Uživatelské jméno:</em> <%= @user.username %></li>
+  </ul>
+  <div class="card-body">
+    <%= link_to 'Upravit přihlašovací údaje', edit_user_registration_path, class: 'card-link' %>
+    <%= link_to 'Smazat účet', account_removal_path, class: 'card-link' %>
+    <%= link_to 'Odhlásit se', destroy_user_session_path, method: :delete, class: 'card-link' %>
+  </div>
+</div>

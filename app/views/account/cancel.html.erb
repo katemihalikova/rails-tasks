@@ -1,0 +1,13 @@
+<h1 class="my-3">Smazat účet</h1>
+
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Můj účet' => account_path,
+    'Smazat účet' => nil,
+  }
+} %>
+
+<p>Opravdu smazat celý účet?</p>
+
+<%= link_to 'Ano', user_registration_path, method: :delete %> |
+<%= link_to 'Ne', :back %>
