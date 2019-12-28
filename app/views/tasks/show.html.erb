@@ -1,6 +1,6 @@
 <h1 class="my-3">
   Úkol:
-  <% if @task.is_done %>✔️<% end %> <%= @task.title %>
+  <% if @task.is_done %><span title="Hotový úkol">✔️</span><% end %> <%= @task.title %>
 </h1>
 
 <%= render partial: 'breadcrumb', locals: {

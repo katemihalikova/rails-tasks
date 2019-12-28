@@ -24,8 +24,9 @@
           <tr>
             <th scope="row"><%= task.id %></th>
             <td>
-              <% if task.is_done %>✔️<% end %>
+              <% if task.is_done %><span title="Hotový úkol">✔️</span><% end %>
               <%= task.title %>
+              <% if task.note %><span title="Má poznámku">📝</span><% end %>
             </td>
             <td>
               <% task.tags.each do |tag| %>
