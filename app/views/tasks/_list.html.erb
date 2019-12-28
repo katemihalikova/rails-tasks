@@ -44,6 +44,7 @@
       <% end %>
     </tbody>
   </table>
+  <%= will_paginate tasks %>
 <% else %>
   <p>
     Nejsou tu žádné úkoly. Přidejte si <%= link_to 'nový úkol', new_task_path %>.

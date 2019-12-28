@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
 
   def show
     @category = current_user.categories.find(params[:id])
+    @tasks = @category.tasks.page(params[:page])
   end
 
   def new

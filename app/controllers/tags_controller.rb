@@ -5,6 +5,7 @@ class TagsController < ApplicationController
 
   def show
     @tag = current_user.tags.find(params[:id])
+    @tasks = @tag.tasks.page(params[:page])
   end
 
   def new

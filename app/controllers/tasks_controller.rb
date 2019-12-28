@@ -1,14 +1,14 @@
 class TasksController < ApplicationController
   def index
-    @tasks = current_user.tasks.includes([:category, :tags])
+    @tasks = current_user.tasks.includes([:category, :tags]).page(params[:page])
   end
 
   def completed
-    @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: true)
+    @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: true).page(params[:page])
   end
 
   def pending
-    @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: false)
+    @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: false).page(params[:page])
   end
 
   def show

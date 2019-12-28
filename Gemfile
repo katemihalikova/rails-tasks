@@ -41,6 +41,8 @@ gem 'responders', '~> 2.4'
 gem 'devise', '~> 4.7'
 gem 'chroma'
 gem 'jquery-rails'
+gem 'will_paginate', '~> 3.1.1'
+gem 'will_paginate-bootstrap4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
