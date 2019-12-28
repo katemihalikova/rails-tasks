@@ -1,0 +1,7 @@
+<%= simple_form_for :filter, url: tasks_filter_path, wrapper: :inline_form, html: { class: "form-inline" } do |f| %>
+  Zobrazit jen úkoly v kategorii
+  <%= f.input :category, collection: @categories, include_blank: "(všechny kategorie)", include_hidden: false, required: false, input_html: { class: "form-control-sm mx-2 w-auto" } %>
+  a / nebo jen s tagy
+  <%= f.input :tags, collection: @tags, include_hidden: false, required: false, input_html: { class: "form-control-sm mx-2 w-auto", multiple: true, size: 3 } %>
+  <%= f.button :submit, "Zobrazit", class: "btn-secondary btn-sm" %>
+<% end %>

@@ -1,0 +1,25 @@
+<h1 class="my-3">
+  Úkoly
+  <% if @category %>
+    v kategorii
+    <%= render partial: 'categories/badge', locals: { category: @category } %>
+  <% else %>
+    bez kategorie
+  <% end %>
+</h1>
+
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    "Dle kategorie: #{@category ? @category.title : "(bez kategorie)"}" => nil,
+  }
+} %>
+
+<aside class="my-2">
+  <%= link_to 'Přidat nový úkol', new_task_path %> |
+  Zobrazit <%= link_to 'všechny úkoly', root_path %> |
+  <%= link_to "#{@group == 1 ? 'Neseskupovat' : 'Seskupit'} úkoly podle kategorie", group: @group == 1 ? nil : 1 %>
+  <%= render 'form_tags' %>
+</aside>
+
+<%= render partial: @group == 1 ? 'list_grouped' : 'list', locals: { tasks: @tasks } %>

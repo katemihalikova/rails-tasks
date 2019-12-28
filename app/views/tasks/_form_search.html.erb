@@ -1,5 +1,5 @@
 <%= simple_form_for :search, url: tasks_search_path, method: :get, wrapper: :inline_form, html: { class: "form-inline" } do |f| %>
   Vyhledat v úkolech
-  <%= f.input :keyword, as: :string, input_html: { type: "search", class: "form-control-sm mx-2" } %>
+  <%= f.input :keyword, as: :string, input_html: { type: "search", class: "form-control-sm mx-2 w-auto" } %>
   <%= f.button :submit, "Hledat", class: "btn-secondary btn-sm" %>
 <% end %>

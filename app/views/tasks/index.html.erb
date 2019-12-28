@@ -11,6 +11,7 @@
   Zobrazit <%= link_to 'jen hotové', tasks_completed_path %> nebo <%= link_to 'jen nehotové', tasks_pending_path %> úkoly |
   <%= link_to "#{@group == 1 ? 'Neseskupovat' : 'Seskupit'} úkoly podle kategorie", group: @group == 1 ? nil : 1 %><br>
   <%= render 'form_search' %>
+  <%= render 'form_category_and_tags' %>
 </aside>
 
 <%= render partial: @group == 1 ? 'list_grouped' : 'list', locals: { tasks: @tasks } %>
