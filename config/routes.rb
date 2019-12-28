@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   }
   get 'tasks/completed'
   get 'tasks/pending'
+  get 'tasks/search(/:keyword)', to: 'tasks#search', as: 'tasks_search'
   resources :tasks
 
   get 'settings', to: 'settings#index'

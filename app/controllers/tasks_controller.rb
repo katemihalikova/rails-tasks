@@ -17,6 +17,16 @@ class TasksController < ApplicationController
     sort_tasks
   end
 
+  def search
+    if params[:search]
+      redirect_to tasks_search_path(params[:search][:keyword])
+    else
+      @keyword = params[:keyword]
+      @tasks = current_user.tasks.includes([:category, :tags]).where("title LIKE ? OR note LIKE ?", "%#{@keyword}%", "%#{@keyword}%").page(params[:page])
+      sort_tasks
+    end
+  end
+
   def show
     @task = current_user.tasks.find(params[:id])
   end

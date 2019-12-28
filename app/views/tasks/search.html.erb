@@ -1,0 +1,17 @@
+<h1 class="my-3">
+  Úkoly obsahující <%= @keyword %>
+</h1>
+
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Úkoly' => root_path,
+    "Vyhledávání: #{@keyword}" => nil,
+  }
+} %>
+
+<aside class="my-2">
+  <%= link_to 'Přidat nový úkol', new_task_path %> |
+  Zobrazit <%= link_to 'všechny úkoly', root_path %>
+</aside>
+
+<%= render partial: 'list', locals: { tasks: @tasks } %>
