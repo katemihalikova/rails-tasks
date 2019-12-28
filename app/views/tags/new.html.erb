@@ -2,7 +2,6 @@
 
 <%= render partial: 'breadcrumb', locals: {
   breadcrumb: {
-    'Úkoly' => root_path,
     'Nastavení' => settings_path,
     'Tagy' => tags_path,
     'Přidat tag' => nil,
@@ -12,5 +11,5 @@
 <%= render 'form' %>
 
 <p class="mt-1">
-  <%= link_to 'Zrušit', tags_path %>
+  <%= link_to 'Zrušit', :back %>
 </p>

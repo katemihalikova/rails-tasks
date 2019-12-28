@@ -5,7 +5,6 @@
 
 <%= render partial: 'breadcrumb', locals: {
   breadcrumb: {
-    'Úkoly' => root_path,
     'Nastavení' => settings_path,
     'Tagy' => tags_path,
     @tag.title => nil,
@@ -34,5 +33,5 @@
 <%= render partial: 'tasks/list', locals: { tasks: @tasks } %>
 
 <p class="mt-1">
-  <%= link_to 'Jít na seznam tagů', tags_path %>
+  <%= link_to "Zpět", :back %>
 </p>
