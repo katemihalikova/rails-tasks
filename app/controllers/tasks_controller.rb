@@ -1,14 +1,17 @@
 class TasksController < ApplicationController
   def index
     @tasks = current_user.tasks.includes([:category, :tags]).page(params[:page])
+    parse_group
   end
 
   def completed
     @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: true).page(params[:page])
+    parse_group
   end
 
   def pending
     @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: false).page(params[:page])
+    parse_group
   end
 
   def show
@@ -64,5 +67,9 @@ class TasksController < ApplicationController
   def load_categories_tags
     @categories = current_user.categories
     @tags = current_user.tags
+  end
+
+  def parse_group
+    @group = params.fetch(:group, 0).to_i
   end
 end

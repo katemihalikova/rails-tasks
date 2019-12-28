@@ -9,7 +9,8 @@
 
 <p>
   <%= link_to 'Přidat nový úkol', new_task_path %> |
-  Zobrazit <%= link_to 'všechny', root_path %> nebo <%= link_to 'jen hotové', tasks_completed_path %> úkoly
+  Zobrazit <%= link_to 'všechny', root_path %> nebo <%= link_to 'jen hotové', tasks_completed_path %> úkoly |
+  <%= link_to "#{@group == 1 ? 'Neseskupovat' : 'Seskupit'} úkoly podle kategorie", group: @group == 1 ? nil : 1 %>
 </p>
 
-<%= render partial: 'list', locals: { tasks: @tasks } %>
+<%= render partial: @group == 1 ? 'list_grouped' : 'list', locals: { tasks: @tasks } %>
