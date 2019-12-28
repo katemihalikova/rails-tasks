@@ -8,6 +8,6 @@
   }
 } %>
 
-<p><%= link_to 'Přidat novou kategorii', new_category_path %></p>
+<aside class="my-2"><%= link_to 'Přidat novou kategorii', new_category_path %></aside>
 
 <%= render partial: 'list', locals: { categories: @categories } %>
