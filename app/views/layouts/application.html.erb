@@ -18,14 +18,14 @@
         <nav class="collapse navbar-collapse ml-3 flex-grow-1" id="navbarNav">
           <ul class="navbar-nav flex-grow-1 align-items-md-center">
             <% if user_signed_in? %>
-              <li class="nav-item flex-shrink-0 active"><!-- @TODO active -->
+              <li class="nav-item flex-shrink-0<% if controller_name == 'tasks' %> active<% end %>">
                 <%= link_to 'Úkoly', root_path, class: 'nav-link' %>
               </li>
-              <li class="nav-item flex-shrink-0">
+              <li class="nav-item flex-shrink-0<% if controller_name.in? ['settings', 'categories', 'tags'] %> active<% end %>">
                 <%= link_to 'Nastavení', settings_path, class: 'nav-link' %>
               </li>
-              <li class="nav-item flex-shrink-0 mr-auto">
-                <a class="nav-link" href="#">Můj účet @TODO</a>
+              <li class="nav-item flex-shrink-0<% if controller_name.in? ['account', 'registrations'] %> active<% end %> mr-auto">
+                <%= link_to 'Můj účet', account_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
                 <div class="py-2 px-md-2 text-light text-md-right font-italic">
