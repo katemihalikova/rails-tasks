@@ -1,4 +1,9 @@
-<h1 class="my-3">settings#index</h1>
+<h1 class="my-3">Nastavení</h1>
 
-<%= link_to 'Categories', categories_path %><br>
-<%= link_to 'Tags', tags_path %><br>
+<%= render partial: 'breadcrumb', locals: {
+  breadcrumb: {
+    'Nastavení' => nil,
+  }
+} %>
+
+<p>Nastavit <%= link_to 'kategorie', categories_path %> nebo <%= link_to 'tagy', tags_path %></p>
