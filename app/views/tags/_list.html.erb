@@ -1,25 +1,25 @@
-<% if tags.size > 0 %>
+<% if tags.any? %>
   <table class="table">
     <thead class="thead-light">
       <tr>
-        <th scope="col">ID</th>
+        <th scope="col" class="d-none d-md-table-cell">ID</th>
         <th scope="col">Tag</th>
-        <th scope="col">Barva</th>
+        <th scope="col" class="d-none d-md-table-cell">Barva</th>
         <th scope="col">Úkolů</th>
-        <th scope="col">Datum vytvoření</th>
-        <th scope="col">Datum změny</th>
+        <th scope="col" class="d-none d-lg-table-cell">Datum vytvoření</th>
+        <th scope="col" class="d-none d-lg-table-cell">Datum změny</th>
         <th scope="col" style="width: 13rem;"></th>
       </tr>
     </thead>
     <tbody>
       <% tags.each do |tag| %>
         <tr>
-          <th scope="row"><%= tag.id %></th>
+          <th scope="row" class="d-none d-md-table-cell"><%= tag.id %></th>
           <td><%= render partial: 'badge', locals: { tag: tag } %></td>
-          <td><%= tag.color %></td>
+          <td class="d-none d-md-table-cell"><%= tag.color %></td>
           <td><%= tag.tasks.size %></td>
-          <td><%= format_datetime tag.created_at %></td>
-          <td><%= format_datetime tag.updated_at %></td>
+          <td class="d-none d-lg-table-cell"><%= format_datetime tag.created_at %></td>
+          <td class="d-none d-lg-table-cell"><%= format_datetime tag.updated_at %></td>
           <td class="text-right">
             <%= link_to 'Detail', tag_path(tag) %> |
             <%= link_to 'Upravit', edit_tag_path(tag) %> |

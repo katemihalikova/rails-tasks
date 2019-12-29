@@ -25,7 +25,7 @@
     <li class="list-group-item py-2"><em>ID:</em> <%= @task.id %></li>
     <li class="list-group-item py-2"><em>Kategorie:</em> <%= if @task.category then render partial: 'categories/badge', locals: { category: @task.category } else "(žádná)" end %></li>
     <li class="list-group-item py-2"><em>Tagy:</em>
-      <% if @task.tags.size > 0 %>
+      <% if @task.tags.any? %>
         <%@task.tags.each do |tag| %>
           <%= render partial: 'tags/badge', locals: { tag: tag } %>
         <% end %>

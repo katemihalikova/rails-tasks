@@ -1,4 +1,4 @@
-<% if tasks.size > 0 %>
+<% if tasks.any? %>
   <% tasks.group_by(&:category).each do |category, tasks| %>
     <h2 class="mt-4 h4">
       <% if category %>
@@ -10,32 +10,32 @@
     <table class="table">
       <thead class="thead-light">
         <tr>
-          <th scope="col">ID</th>
+          <th scope="col" class="d-none d-md-table-cell">ID</th>
           <th scope="col">Úkol</th>
-          <th scope="col">Tagy</th>
+          <th scope="col" class="d-none d-md-table-cell">Tagy</th>
           <th scope="col">Deadline</th>
-          <th scope="col">Datum vytvoření</th>
-          <th scope="col">Datum změny</th>
+          <th scope="col" class="d-none d-lg-table-cell">Datum vytvoření</th>
+          <th scope="col" class="d-none d-lg-table-cell">Datum změny</th>
           <th scope="col" style="width: 13rem;"></th>
         </tr>
       </thead>
       <tbody>
         <% tasks.each do |task| %>
           <tr>
-            <th scope="row"><%= task.id %></th>
+            <th scope="row" class="d-none d-md-table-cell"><%= task.id %></th>
             <td>
               <% if task.is_done %><span title="Hotový úkol">✔️</span><% end %>
               <%= task.title %>
               <% if task.note %><span title="Má poznámku">📝</span><% end %>
             </td>
-            <td>
+            <td class="d-none d-md-table-cell">
               <% task.tags.each do |tag| %>
                 <%= render partial: 'tags/badge', locals: { tag: tag } %>
               <% end %>
             </td>
             <td><%= if task.deadline_at then format_local_datetime task.deadline_at end %></td>
-            <td><%= format_datetime task.created_at %></td>
-            <td><%= format_datetime task.updated_at %></td>
+            <td class="d-none d-lg-table-cell"><%= format_datetime task.created_at %></td>
+            <td class="d-none d-lg-table-cell"><%= format_datetime task.updated_at %></td>
             <td class="text-right">
               <%= link_to 'Detail', task_path(task) %> |
               <%= link_to 'Upravit', edit_task_path(task) %> |

@@ -1,47 +1,58 @@
-<% if tasks.size > 0 %>
+<% if tasks.any? %>
   <table class="table">
     <thead class="thead-light">
       <tr>
-        <th scope="col">ID</th>
+        <th scope="col" class="d-none d-md-table-cell">ID</th>
+        <th scope="col" class="d-md-none p-2"></th>
         <th scope="col">Úkol</th>
-        <th scope="col">Kategorie</th>
-        <th scope="col">Tagy</th>
-        <th scope="col">Deadline</th>
-        <th scope="col">Datum vytvoření</th>
-        <th scope="col">Datum změny</th>
+        <th scope="col" class="d-none d-md-table-cell">Kategorie a tagy</th>
+        <th scope="col" class="d-none d-sm-table-cell">Deadline</th>
+        <th scope="col" class="d-none d-lg-table-cell">Datum vytvoření</th>
+        <th scope="col" class="d-none d-lg-table-cell">Datum změny</th>
         <th scope="col" style="width: 13rem;"></th>
       </tr>
     </thead>
     <tbody>
       <% tasks.each do |task| %>
         <tr>
-          <th scope="row"><%= task.id %></th>
-          <td>
+          <th scope="row" rowspan="<%= task_list_rows(task) %>" class="d-none d-md-table-cell"><%= task.id %></th>
+          <td rowspan="<%= task_list_rows(task) %>" class="d-md-none p-2" style="background-color: <%= task.category ? task.category.color : "transparent" %>;"></td>
+          <td rowspan="<%= task_list_rows(task) %>">
             <% if task.is_done %><span title="Hotový úkol">✔️</span><% end %>
             <%= task.title %>
             <% if task.note %><span title="Má poznámku">📝</span><% end %>
           </td>
           <% if task.category %>
-            <td class="pl-4" style="background: linear-gradient(to right, <%= task.category.color %> 1rem, transparent 1rem);">
+            <td class="d-none d-md-table-cell pl-4" style="background: linear-gradient(to right, <%= task.category.color %> 1rem, transparent 1rem);">
               <%= task.category.title %>
             </td>
-          <% else %>
-            <td></td>
-          <% end %>
-          <td>
+          <% elsif task.tags.any? %>
+            <td class="d-none d-md-table-cell">
             <% task.tags.each do |tag| %>
               <%= render partial: 'tags/badge', locals: { tag: tag } %>
             <% end %>
           </td>
-          <td><%= if task.deadline_at then format_local_datetime task.deadline_at end %></td>
-          <td><%= format_datetime task.created_at %></td>
-          <td><%= format_datetime task.updated_at %></td>
-          <td class="text-right">
+          <% else %>
+            <td class="d-none d-md-table-cell"></td>
+          <% end %>
+          <td rowspan="<%= task_list_rows(task) %>" class="d-none d-sm-table-cell"><%= if task.deadline_at then format_local_datetime task.deadline_at end %></td>
+          <td rowspan="<%= task_list_rows(task) %>" class="d-none d-lg-table-cell"><%= format_datetime task.created_at %></td>
+          <td rowspan="<%= task_list_rows(task) %>" class="d-none d-lg-table-cell"><%= format_datetime task.updated_at %></td>
+          <td rowspan="<%= task_list_rows(task) %>" class="text-right">
             <%= link_to 'Detail', task_path(task) %> |
             <%= link_to 'Upravit', edit_task_path(task) %> |
             <%= link_to 'Smazat', task_path(task), method: :delete, data: { confirm: 'Opravdu smazat?' } %>
           </td>
         </tr>
+        <% if task.category && task.tags.any? %>
+          <tr>
+            <td class="d-none d-md-table-cell border-top-0 pt-1">
+              <% task.tags.each do |tag| %>
+                <%= render partial: 'tags/badge', locals: { tag: tag } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
