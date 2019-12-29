@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = current_user.tasks.includes([:category, :tags]).page(params[:page])
+    @tasks = current_user.tasks.includes([:category, :tags_tasks, :tags]).page(params[:page])
     load_categories include_no_category: true
     load_tags
     parse_group
@@ -8,13 +8,13 @@ class TasksController < ApplicationController
   end
 
   def completed
-    @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: true).page(params[:page])
+    @tasks = current_user.tasks.includes([:category, :tags_tasks, :tags]).where(is_done: true).page(params[:page])
     parse_group
     sort_tasks
   end
 
   def pending
-    @tasks = current_user.tasks.includes([:category, :tags]).where(is_done: false).page(params[:page])
+    @tasks = current_user.tasks.includes([:category, :tags_tasks, :tags]).where(is_done: false).page(params[:page])
     parse_group
     sort_tasks
   end
@@ -35,7 +35,7 @@ class TasksController < ApplicationController
 
   def by_category
     @category = params[:category_id] == "0" ? nil : current_user.categories.find(params[:category_id])
-    @tasks = current_user.tasks.includes([:category, :tags]).where(category: @category).page(params[:page])
+    @tasks = current_user.tasks.includes([:category, :tags_tasks, :tags]).where(category: @category).page(params[:page])
     load_tags
     parse_group
     sort_tasks
@@ -44,7 +44,7 @@ class TasksController < ApplicationController
   def by_tags
     tag_ids = params[:tag_ids].split(',').map(&:to_i)
     @tags = current_user.tags.find(tag_ids)
-    @tasks = current_user.tasks.includes([:category, :tags]).where('tags.id': @tags).page(params[:page])
+    @tasks = current_user.tasks.includes([:category, :tags_tasks, :tags]).where('tags_tasks.tag_id': @tags).page(params[:page])
     load_categories include_no_category: true
     parse_group
     sort_tasks
@@ -54,7 +54,7 @@ class TasksController < ApplicationController
     @category = params[:category_id] == "0" ? nil : current_user.categories.find(params[:category_id])
     tag_ids = params[:tag_ids].split(',').map(&:to_i)
     @tags = current_user.tags.find(tag_ids)
-    @tasks = current_user.tasks.includes([:category, :tags]).where(category: @category, 'tags.id': @tags).page(params[:page])
+    @tasks = current_user.tasks.includes([:category, :tags_tasks, :tags]).where(category: @category, 'tags_tasks.tag_id': @tags).page(params[:page])
     parse_group
     sort_tasks
   end
@@ -68,7 +68,7 @@ class TasksController < ApplicationController
       end
     else
       @keyword = params[:keyword]
-      @tasks = current_user.tasks.includes([:category, :tags]).where("title LIKE ? OR note LIKE ?", "%#{@keyword}%", "%#{@keyword}%").page(params[:page])
+      @tasks = current_user.tasks.includes([:category, :tags_tasks, :tags]).where("title LIKE ? OR note LIKE ?", "%#{@keyword}%", "%#{@keyword}%").page(params[:page])
       sort_tasks
     end
   end

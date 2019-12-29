@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
 
   def show
     @category = current_user.categories.find(params[:id])
-    @tasks = @category.tasks.page(params[:page])
+    @tasks = @category.tasks.includes([:tags_tasks, :tags]).order('CASE WHEN deadline_at IS NULL THEN 1 ELSE 0 END ASC, deadline_at ASC').page(params[:page])
   end
 
   def new
