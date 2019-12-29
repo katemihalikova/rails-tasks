@@ -109,7 +109,11 @@ class TasksController < ApplicationController
     @original_task = @task.dup
 
     if @task.update(task_params)
-      redirect_before_form fallback_location: @task, flash: {success: "Úkol byl úspěšně upraven."}
+      if request.patch?
+        redirect_back fallback_location: @task, flash: {success: "Úkol byl úspěšně upraven."}
+      else
+        redirect_before_form fallback_location: @task, flash: {success: "Úkol byl úspěšně upraven."}
+      end
     else
       load_categories
       load_tags

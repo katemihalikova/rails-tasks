@@ -28,10 +28,10 @@
             </td>
           <% elsif task.tags.any? %>
             <td class="d-none d-md-table-cell">
-            <% task.tags.each do |tag| %>
-              <%= render partial: 'tags/badge', locals: { tag: tag } %>
-            <% end %>
-          </td>
+              <% task.tags.each do |tag| %>
+                <%= render partial: 'tags/badge', locals: { tag: tag } %>
+              <% end %>
+            </td>
           <% else %>
             <td class="d-none d-md-table-cell"></td>
           <% end %>
@@ -39,6 +39,7 @@
           <td rowspan="<%= task_list_rows(task) %>" class="d-none d-lg-table-cell"><%= format_datetime task.created_at %></td>
           <td rowspan="<%= task_list_rows(task) %>" class="d-none d-lg-table-cell"><%= format_datetime task.updated_at %></td>
           <td rowspan="<%= task_list_rows(task) %>" class="text-right">
+            <%= link_to "Označit jako #{task.is_done ? "ne" : ""}hotové", task_path(task.id, task: {is_done: !task.is_done}), method: :patch %><br>
             <%= link_to 'Detail', task_path(task) %> |
             <%= link_to 'Upravit', edit_task_path(task) %> |
             <%= link_to 'Smazat', task_path(task), method: :delete, data: { confirm: 'Opravdu smazat?' } %>
